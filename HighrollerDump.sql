@@ -60,7 +60,6 @@ CREATE TABLE transactions
     PRIMARY KEY (transaction_id)
 );
 
-
 CREATE TABLE sessions
 (
     session_id INTEGER NOT NULL IDENTITY(1,1),
@@ -133,7 +132,7 @@ CREATE TABLE table_items
     quantity INTEGER NOT NULL,
     PRIMARY KEY (table_item_id)
 );
-
+/*
 --For windows: Add data
 BULK INSERT employees
 FROM 'C:\Users\mrpi3\OneDrive\Documents\UW Files\UW Fall 2024\INFO 430\HighRollerDB\data\employees.csv'
@@ -282,7 +281,7 @@ WITH
 	ROWTERMINATOR = '\n',   
 	TABLOCK
 )
-
+*/
 -- Add foreign keys
 ALTER TABLE employees
     ADD CONSTRAINT fk_employee_table_id FOREIGN KEY (table_id) REFERENCES tables (table_id)
@@ -319,38 +318,167 @@ ALTER TABLE table_items
     CONSTRAINT fk_tableitem_item_id FOREIGN KEY (item_id) REFERENCES items (item_id);
 
 
---For Mac
--- BULK INSERT employees
--- FROM '/employees.csv'
--- WITH
--- (
---     FIRSTROW = 2,
---     FIELDTERMINATOR = ',',  --CSV field delimiter
---     ROWTERMINATOR = '\n',   --Use to shift the control to next row
---     TABLOCK
--- )
+ BULK INSERT employees
+FROM '/employees.csv'
+ WITH
+ (
+     FIRSTROW = 2,
+     FIELDTERMINATOR = ',',  --CSV field delimiter
+     ROWTERMINATOR = '\n',   --Use to shift the control to next row
+     TABLOCK
+ )
 
--- BULK INSERT offense
--- FROM '/offense.csv'
--- WITH
--- (
---     FIRSTROW = 2,
---     FIELDTERMINATOR = ',',  --CSV field delimiter
---     ROWTERMINATOR = '\n',   --Use to shift the control to next row
---     TABLOCK
--- )
--- ALTER TABLE games
--- ALTER COLUMN max_bet SMALLMONEY;
+ BULK INSERT offense
+ FROM '/offense.csv'
+ WITH
+ (
+     FIRSTROW = 2,
+     FIELDTERMINATOR = ',',  --CSV field delimiter
+     ROWTERMINATOR = '\n',   --Use to shift the control to next row
+     TABLOCK
+ )
 
 
 
+BULK INSERT funds
+FROM '/funds.csv'
+WITH
+(
+	FIRSTROW = 2,
+	FIELDTERMINATOR = ',',  
+	ROWTERMINATOR = '\n',   
+	TABLOCK
+)
 
--- BULK INSERT games
--- FROM '/games.csv'
--- WITH
--- (
---     FIRSTROW = 2,
---     FIELDTERMINATOR = ',',  --CSV field delimiter
---     ROWTERMINATOR = '\n',   --Use to shift the control to next row
---     TABLOCK
--- )
+ ALTER TABLE games
+ ALTER COLUMN max_bet SMALLMONEY;
+
+
+ BULK INSERT games
+ FROM '/games.csv'
+ WITH
+ (
+     FIRSTROW = 2,
+     FIELDTERMINATOR = ',',  --CSV field delimiter
+     ROWTERMINATOR = '\n',   --Use to shift the control to next row
+     TABLOCK
+ )
+
+--incident logs
+BULK INSERT incident_logs
+FROM '/incidents.csv'
+WITH
+(
+	FIRSTROW = 2,
+	FIELDTERMINATOR = ',',  
+	ROWTERMINATOR = '\n',   
+	TABLOCK
+)
+
+BULK INSERT items
+FROM '/items.csv'
+WITH
+(
+	FIRSTROW = 2,
+	FIELDTERMINATOR = ',',  
+	ROWTERMINATOR = '\n',   
+	TABLOCK
+)
+
+--jackpots
+BULK INSERT jackpots
+FROM '/jackpots.csv'
+WITH
+(
+	FIRSTROW = 2,
+	FIELDTERMINATOR = ',',  
+	ROWTERMINATOR = '\n',   
+	TABLOCK
+)
+
+ALTER TABLE machines
+ALTER COLUMN max_payout MONEY NOT NULL
+--machines
+BULK INSERT machines
+FROM '/machines.csv'
+WITH
+(
+	FIRSTROW = 2,
+	FIELDTERMINATOR = ',',  
+	ROWTERMINATOR = '\n',   
+	TABLOCK
+)
+
+BULK INSERT offense
+FROM '/offense.csv'
+WITH
+(
+    FIRSTROW = 2,
+    FIELDTERMINATOR = ',',  
+    ROWTERMINATOR = '\n',   
+    TABLOCK
+)
+
+BULK INSERT players
+FROM '/players.csv'
+WITH
+(
+    FIRSTROW = 2,
+    FIELDTERMINATOR = ',',  
+    ROWTERMINATOR = '\n',   
+    TABLOCK
+)
+
+--plays
+BULK INSERT plays
+FROM '/plays.csv'
+WITH
+(
+	FIRSTROW = 2,
+	FIELDTERMINATOR = ',',  
+	ROWTERMINATOR = '\n',   
+	TABLOCK
+)
+ALTER TABLE sessions
+ALTER COLUMN total_plays INT NOT NULL
+--sessions
+BULK INSERT sessions
+FROM '/sessions.csv'
+WITH
+(
+	FIRSTROW = 2,
+	FIELDTERMINATOR = ',',  
+	ROWTERMINATOR = '\n',   
+	TABLOCK
+)
+--tables_items
+BULK INSERT table_items
+FROM '/table_items.csv'
+WITH
+(
+	FIRSTROW = 2,
+	FIELDTERMINATOR = ',',  
+	ROWTERMINATOR = '\n',   
+	TABLOCK
+)
+
+--tables
+BULK INSERT tables
+FROM '/tables.csv'
+WITH
+(
+	FIRSTROW = 2,
+	FIELDTERMINATOR = ',',  
+	ROWTERMINATOR = '\n',   
+	TABLOCK
+)
+
+BULK INSERT transactions
+FROM '/transactions.csv'
+WITH
+(
+	FIRSTROW = 2,
+	FIELDTERMINATOR = ',',  
+	ROWTERMINATOR = '\n',   
+	TABLOCK
+)
