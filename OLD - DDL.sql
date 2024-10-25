@@ -59,7 +59,6 @@ CREATE TABLE transactions
     PRIMARY KEY (transaction_id)
 );
 
-
 CREATE TABLE sessions
 (
     session_id INTEGER NOT NULL IDENTITY(1,1),
@@ -74,7 +73,7 @@ CREATE TABLE sessions
 CREATE TABLE games
 (
     game_id INTEGER NOT NULL IDENTITY(1,1),
-    name VARCHAR(20) NOT NULL,
+    game_name VARCHAR(20) NOT NULL,
     description VARCHAR(200) NOT NULL,
     min_bet INTEGER NOT NULL,
     max_bet INTEGER NOT NULL,
@@ -84,7 +83,7 @@ CREATE TABLE games
 CREATE TABLE plays
 (
     play_id INTEGER NOT NULL IDENTITY(1,1),
-    session_id INTEGER NOT NULL,
+    session_id IN   TERGER NOT NULL,
     game_id INTEGER NOT NULL,
     bet_amount SMALLMONEY NOT NULL,
     result VARCHAR(4) NOT NULL,
@@ -136,12 +135,12 @@ CREATE TABLE table_items
 
 -- Add foreign keys
 ALTER TABLE employees
-    ADD CONSTRAINT fk_employee_table_id FOREIGN KEY (table_id) REFERENCES tables (table_id)
+    ADD CONSTRAINT fk_employee_table_id FOREIGN KEY (table_id) REFERENCES tables (table_id),
 
 ALTER TABLE incident_logs
     ADD CONSTRAINT fk_incident_player_id FOREIGN KEY (player_id) REFERENCES players (player_id),
-    CONSTRAINT fk_incident_employee_id FOREIGN KEY (employee_id) REFERENCES employees (employee_id),
-    CONSTRAINT fk_incident_offense_id FOREIGN KEY (offense_id) REFERENCES offense (offense_id);
+    ADD CONSTRAINT fk_incident_employee_id FOREIGN KEY (employee_id) REFERENCES employees (employee_id),
+    ADD CONSTRAINT fk_incident_offense_id FOREIGN KEY (offense_id) REFERENCES offense (offense_id);
 
 ALTER TABLE funds
     ADD CONSTRAINT fk_fund_player_id FOREIGN KEY (player_id) REFERENCES players (player_id);
@@ -153,8 +152,8 @@ ALTER TABLE sessions
     ADD CONSTRAINT fk_session_player_id FOREIGN KEY (player_id) REFERENCES players (player_id);
 
 ALTER TABLE plays
-    ADD CONSTRAINT fk_play_session_id FOREIGN KEY (session_id) REFERENCES sessions (session_id),
-    CONSTRAINT fk_play_game_id FOREIGN KEY (game_id) REFERENCES games (game_id);
+    ADD CONSTRAINT fk_play_session_id FOREIGN KEY (session_id) REFERENCES sessions (session_id);
+    ADD CONSTRAINT fk_play_game_id FOREIGN KEY (game_id) REFERENCES games (game_id);
 
 ALTER TABLE jackpots
     ADD CONSTRAINT fk_jackpot_player_id FOREIGN KEY (player_id) REFERENCES players (player_id);
@@ -167,16 +166,6 @@ ALTER TABLE tables
 
 ALTER TABLE table_items
     ADD CONSTRAINT fk_tableitem_table_id FOREIGN KEY (table_id) REFERENCES tables (table_id),
-    CONSTRAINT fk_tableitem_item_id FOREIGN KEY (item_id) REFERENCES items (item_id);
+    ADD CONSTRAINT fk_tableitem_item_id FOREIGN KEY (item_id) REFERENCES items (item_id);
 
 
-
-BULK INSERT employees
-FROM '/employees.csv'
-WITH
-(
-    FIRSTROW = 2,
-    FIELDTERMINATOR = ',',  --CSV field delimiter
-    ROWTERMINATOR = '\n',   --Use to shift the control to next row
-    TABLOCK
-)
