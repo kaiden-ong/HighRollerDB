@@ -168,3 +168,15 @@ ALTER TABLE tables
 ALTER TABLE table_items
     ADD CONSTRAINT fk_tableitem_table_id FOREIGN KEY (table_id) REFERENCES tables (table_id),
     CONSTRAINT fk_tableitem_item_id FOREIGN KEY (item_id) REFERENCES items (item_id);
+
+
+
+BULK INSERT employees
+FROM '/employees.csv'
+WITH
+(
+    FIRSTROW = 2,
+    FIELDTERMINATOR = ',',  --CSV field delimiter
+    ROWTERMINATOR = '\n',   --Use to shift the control to next row
+    TABLOCK
+)
