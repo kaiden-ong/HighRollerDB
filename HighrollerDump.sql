@@ -1,4 +1,5 @@
 CREATE DATABASE HighRollerDB;
+GO
 USE HighRollerDB;
 
 -- Create tables
@@ -24,7 +25,7 @@ CREATE TABLE employees
     PRIMARY KEY (employee_id)
 );
 
-CREATE TABLE offense
+CREATE TABLE offenses
 (
     offense_id INTEGER NOT NULL IDENTITY(1,1),
     offense_name VARCHAR(50) NOT NULL,
@@ -47,7 +48,7 @@ CREATE TABLE funds
 (
     fund_id INTEGER NOT NULL IDENTITY(1,1),
     player_id INTEGER NOT NULL,
-    balance DECIMAL(10,2) NOT NULL,
+    balance MONEY NOT NULL,
     PRIMARY KEY (fund_id)
 );
 
@@ -55,7 +56,7 @@ CREATE TABLE transactions
 (
     transaction_id INTEGER NOT NULL IDENTITY(1,1),
     fund_id INTEGER NOT NULL,
-    amount SMALLMONEY NOT NULL,
+    amount MONEY NOT NULL,
     PRIMARY KEY (transaction_id)
 );
 
@@ -76,8 +77,8 @@ CREATE TABLE games
     game_id INTEGER NOT NULL IDENTITY(1,1),
     name VARCHAR(20) NOT NULL,
     description VARCHAR(200) NOT NULL,
-    min_bet INTEGER NOT NULL,
-    max_bet INTEGER NOT NULL,
+    min_bet MONEY NOT NULL,
+    max_bet MONEY NOT NULL,
     PRIMARY KEY (game_id)
 );
 
@@ -86,9 +87,8 @@ CREATE TABLE plays
     play_id INTEGER NOT NULL IDENTITY(1,1),
     session_id INTEGER NOT NULL,
     game_id INTEGER NOT NULL,
-    bet_amount DECIMAL(10,2) NOT NULL,
+    bet_amount MONEY NOT NULL,
     result VARCHAR(4) NOT NULL,
-    CONSTRAINT check_play_result CHECK (result IN ('win', 'lose')),
     PRIMARY KEY (play_id)
 );
 
@@ -96,7 +96,7 @@ CREATE TABLE jackpots
 (
     jackpot_id INTEGER NOT NULL IDENTITY(1,1),
     player_id INTEGER,
-    amount SMALLMONEY NOT NULL,
+    amount MONEY NOT NULL,
     PRIMARY KEY (jackpot_id)
 );
 
@@ -104,7 +104,7 @@ CREATE TABLE machines
 (
     machine_id INTEGER NOT NULL IDENTITY(1,1),
     game_id INTEGER NOT NULL,
-    max_payout INTEGER NOT NULL,
+    max_payout MONEY NOT NULL,
     status VARCHAR(20),
     PRIMARY KEY (machine_id)
 );
@@ -113,7 +113,7 @@ CREATE TABLE tables
 (
     table_id INTEGER NOT NULL IDENTITY(1,1),
     game_id INTEGER NOT NULL,
-    capactity INTEGER NOT NULL,
+    capacity INTEGER NOT NULL,
     PRIMARY KEY (table_id)
 );
 
@@ -134,6 +134,155 @@ CREATE TABLE table_items
     PRIMARY KEY (table_item_id)
 );
 
+--Add data
+BULK INSERT employees
+FROM 'C:\Users\mrpi3\OneDrive\Documents\UW Files\UW Fall 2024\INFO 430\HighRollerDB\data\employees.csv'
+WITH
+(
+    FIRSTROW = 2,
+    FIELDTERMINATOR = ',',  
+    ROWTERMINATOR = '\n',   
+    TABLOCK
+)
+
+BULK INSERT funds
+FROM 'C:\Users\mrpi3\OneDrive\Documents\UW Files\UW Fall 2024\INFO 430\HighRollerDB\data\funds.csv'
+WITH
+(
+	FIRSTROW = 2,
+	FIELDTERMINATOR = ',',  
+	ROWTERMINATOR = '\n',   
+	TABLOCK
+)
+
+BULK INSERT games
+FROM 'C:\Users\mrpi3\OneDrive\Documents\UW Files\UW Fall 2024\INFO 430\HighRollerDB\data\games.csv'
+WITH
+(
+    FIRSTROW = 2,
+    FIELDTERMINATOR = ',',  
+    ROWTERMINATOR = '\n',   
+    TABLOCK
+)
+
+--incident logs
+BULK INSERT incident_logs
+FROM 'C:\Users\mrpi3\OneDrive\Documents\UW Files\UW Fall 2024\INFO 430\HighRollerDB\data\incident.csv'
+WITH
+(
+	FIRSTROW = 2,
+	FIELDTERMINATOR = ',',  
+	ROWTERMINATOR = '\n',   
+	TABLOCK
+)
+
+BULK INSERT items
+FROM 'C:\Users\mrpi3\OneDrive\Documents\UW Files\UW Fall 2024\INFO 430\HighRollerDB\data\items.csv'
+WITH
+(
+	FIRSTROW = 2,
+	FIELDTERMINATOR = ',',  
+	ROWTERMINATOR = '\n',   
+	TABLOCK
+)
+
+--jackpots
+BULK INSERT jackpots
+FROM 'C:\Users\mrpi3\OneDrive\Documents\UW Files\UW Fall 2024\INFO 430\HighRollerDB\data\jackpots.csv'
+WITH
+(
+	FIRSTROW = 2,
+	FIELDTERMINATOR = ',',  
+	ROWTERMINATOR = '\n',   
+	TABLOCK
+)
+
+--machines
+BULK INSERT machines
+FROM 'C:\Users\mrpi3\OneDrive\Documents\UW Files\UW Fall 2024\INFO 430\HighRollerDB\data\machines.csv'
+WITH
+(
+	FIRSTROW = 2,
+	FIELDTERMINATOR = ',',  
+	ROWTERMINATOR = '\n',   
+	TABLOCK
+)
+
+
+BULK INSERT offenses
+FROM 'C:\Users\mrpi3\OneDrive\Documents\UW Files\UW Fall 2024\INFO 430\HighRollerDB\data\offenses.csv'
+WITH
+(
+    FIRSTROW = 2,
+    FIELDTERMINATOR = ',',  
+    ROWTERMINATOR = '\n',   
+    TABLOCK
+)
+
+BULK INSERT players
+FROM 'C:\Users\mrpi3\OneDrive\Documents\UW Files\UW Fall 2024\INFO 430\HighRollerDB\data\players.csv'
+WITH
+(
+    FIRSTROW = 2,
+    FIELDTERMINATOR = ',',  
+    ROWTERMINATOR = '\n',   
+    TABLOCK
+)
+
+--plays
+BULK INSERT plays
+FROM 'C:\Users\mrpi3\OneDrive\Documents\UW Files\UW Fall 2024\INFO 430\HighRollerDB\data\plays.csv'
+WITH
+(
+	FIRSTROW = 2,
+	FIELDTERMINATOR = ',',  
+	ROWTERMINATOR = '\n',   
+	TABLOCK
+)
+
+--sessions
+BULK INSERT sessions
+FROM 'C:\Users\mrpi3\OneDrive\Documents\UW Files\UW Fall 2024\INFO 430\HighRollerDB\data\sessions.csv'
+WITH
+(
+	FIRSTROW = 2,
+	FIELDTERMINATOR = ',',  
+	ROWTERMINATOR = '\n',   
+	TABLOCK
+)
+
+--tables_items
+BULK INSERT table_items
+FROM 'C:\Users\mrpi3\OneDrive\Documents\UW Files\UW Fall 2024\INFO 430\HighRollerDB\data\table_items.csv'
+WITH
+(
+	FIRSTROW = 2,
+	FIELDTERMINATOR = ',',  
+	ROWTERMINATOR = '\n',   
+	TABLOCK
+)
+
+--tables
+BULK INSERT tables
+FROM 'C:\Users\mrpi3\OneDrive\Documents\UW Files\UW Fall 2024\INFO 430\HighRollerDB\data\tables.csv'
+WITH
+(
+	FIRSTROW = 2,
+	FIELDTERMINATOR = ',',  
+	ROWTERMINATOR = '\n',   
+	TABLOCK
+)
+
+BULK INSERT transactions
+FROM 'C:\Users\mrpi3\OneDrive\Documents\UW Files\UW Fall 2024\INFO 430\HighRollerDB\data\transactions.csv'
+WITH
+(
+	FIRSTROW = 2,
+	FIELDTERMINATOR = ',',  
+	ROWTERMINATOR = '\n',   
+	TABLOCK
+)
+
 -- Add foreign keys
 ALTER TABLE employees
     ADD CONSTRAINT fk_employee_table_id FOREIGN KEY (table_id) REFERENCES tables (table_id)
@@ -141,7 +290,7 @@ ALTER TABLE employees
 ALTER TABLE incident_logs
     ADD CONSTRAINT fk_incident_player_id FOREIGN KEY (player_id) REFERENCES players (player_id),
     CONSTRAINT fk_incident_employee_id FOREIGN KEY (employee_id) REFERENCES employees (employee_id),
-    CONSTRAINT fk_incident_offense_id FOREIGN KEY (offense_id) REFERENCES offense (offense_id);
+    CONSTRAINT fk_incident_offense_id FOREIGN KEY (offense_id) REFERENCES offenses (offense_id);
 
 ALTER TABLE funds
     ADD CONSTRAINT fk_fund_player_id FOREIGN KEY (player_id) REFERENCES players (player_id);
@@ -168,15 +317,3 @@ ALTER TABLE tables
 ALTER TABLE table_items
     ADD CONSTRAINT fk_tableitem_table_id FOREIGN KEY (table_id) REFERENCES tables (table_id),
     CONSTRAINT fk_tableitem_item_id FOREIGN KEY (item_id) REFERENCES items (item_id);
-
-
-
-BULK INSERT employees
-FROM '/employees.csv'
-WITH
-(
-    FIRSTROW = 2,
-    FIELDTERMINATOR = ',',  --CSV field delimiter
-    ROWTERMINATOR = '\n',   --Use to shift the control to next row
-    TABLOCK
-)
