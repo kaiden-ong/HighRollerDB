@@ -159,8 +159,8 @@ DECLARE @date DATE = '2024-10-25'
 EXEC InsertIncidentLog @player_fname, @player_lname, @player_phone, @player_email, @employee_fname,
 	@employee_lname, @employee_job, @employee_table, @offense_name, @desc, @date
 
-SELECT TOP 1 * FROM tables
-ORDER BY table_id DESC
+SELECT TOP 1 * FROM incident_logs
+ORDER BY incident_id DESC
 GO
 
 
