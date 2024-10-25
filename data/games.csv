@@ -1,0 +1,7 @@
+game_id,game_name,description,min_bet,max_bet
+1,Craps,Exciting dice game with multiple betting options.,$5.00 ,"$75,000.00 "
+2,Baccarat,Card game where players bet on the banker or player.,$10.00 ,"$50,000.00 "
+3,Blackjack,A popular card game where the goal is to reach 21.,$5.00 ,"$3,500.00 "
+4,Roulette,Bet on numbers or colors in this classic wheel game.,$5.00 ,"$40,000.00 "
+5,Poker,Strategic card game with many different variants.,$0.00 ,"$50,000.00 "
+6,Slots,Machine game with varying odds and payouts.,$1.00 ,"$25,000.00 "
