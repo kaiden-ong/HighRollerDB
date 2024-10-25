@@ -2,6 +2,9 @@
 USE HighRollerDB
 GO
 
+ALTER TABLE sessions
+ADD total_winnings SMALLMONEY NULL;
+GO
 
 CREATE FUNCTION dbo.calculateTotalWinnings(@SessionID INT)
 RETURNS DECIMAL(10,2)
@@ -18,34 +21,9 @@ BEGIN
         plays p
     WHERE 
         p.session_id = @SessionID;
-    RETURN IFNULL(@TotalWinnings, 0);
+    RETURN (@TotalWinnings);
 END;
 GO
-O
-CREATE PROCEDURE updateFunds
-(@transaction_amount DECIMAL(10,2))
-AS
-BEGIN
---Look up product using product name
-DECLARE @ProdID int
-SET @ProdID = (SELECT ProductID FROM tblPRODUCT WHERE ProductName =
-@ProdName)
---look up old price
-DEClARE @oldPrice numeric(5,2)
-SET @oldPrice = (SELECT Price FROM tblPRODUCT WHERE ProductName = @ProdName)
---Error handling
-IF @ProdID IS NULL
-THROW 50061, '@ProdTypeID cannot be NULL; statement is
-terminating', 1;
---Update product price if everything is fine
-Else
-BEGIN
-UPDATE tblPRODUCT
-SET Price = @NewPrice
-WHERE ProductID = @ProdID
---provide feedback to the user
-Print (CONCAT('Price for Product ', @ProdName, ' updated from ',
-@oldPrice,
-' to ', @NewPrice));
-END
 
+UPDATE sessions
+SET total_winnings = dbo.calculateTotalWinnings(session_id);
