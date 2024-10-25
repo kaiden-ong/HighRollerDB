@@ -167,7 +167,7 @@ WITH
 
 --incident logs
 BULK INSERT incident_logs
-FROM 'C:\Users\mrpi3\OneDrive\Documents\UW Files\UW Fall 2024\INFO 430\HighRollerDB\data\incident.csv'
+FROM 'C:\Users\mrpi3\OneDrive\Documents\UW Files\UW Fall 2024\INFO 430\HighRollerDB\data\incidents.csv'
 WITH
 (
 	FIRSTROW = 2,

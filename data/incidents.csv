@@ -1,0 +1,51 @@
+incident_id,player_id,employee_id,offense_id,description,date
+1,822,761,6,"A player persistently made inappropriate remarks towards a female dealer leading to multiple complaints.",5/14/2019
+2,601,772,6,"Repeated instances of unwanted advances towards a staff member prompting an official warning.",3/12/2020
+3,84,479,1,"A player stole another's backpack during a crowded event resulting in immediate removal from the premises.",11/9/2018
+4,926,574,9,"Caught trespassing into the VIP lounge without authorization after hours leading to a ban.",6/20/2021
+5,878,342,3,"An altercation broke out between two players over a game rule dispute escalating into a physical fight.",2/3/2020
+6,230,307,2,"A patron vandalized a gaming machine out of frustration after losing a large bet.",8/28/2017
+7,880,833,9,"Accessed a restricted area to retrieve personal items after being warned to stay away.",9/15/2021
+8,503,497,4,"Filed a fraudulent claim for jackpot winnings which was later investigated and dismissed.",1/4/2022
+9,285,67,1,"Caught stealing gaming chips from another player's stack during a high-stakes game.",7/18/2023
+10,992,636,9,"Unauthorized entry into the casino's staff-only area in an attempt to steal cash from the register.",3/30/2024
+11,619,463,2,"Player made derogatory comments about other patrons resulting in multiple harassment claims.",5/12/2023
+12,399,875,5,"A player was caught cheating during a poker game and was subsequently banned.",2/15/2022
+13,712,712,3,"Multiple reports of harassment towards a waitress led to immediate expulsion from the venue.",8/19/2021
+14,895,182,5,"A player attempted to enter the casino without proper identification and was escorted out.",4/28/2023
+15,178,370,7,"A group was caught card counting during a blackjack game prompting a casino ban.",1/11/2024
+16,575,903,4,"A player was found vandalizing a restroom facility during the busy hours.",6/5/2022
+17,404,288,5,"Unauthorized access to restricted gaming areas was reported leading to a temporary ban.",9/3/2023
+18,532,220,8,"A player attempted to deceive staff regarding age and was banned after verification.",7/26/2018
+19,657,973,3,"After multiple offenses of inappropriate behavior a player was permanently banned.",10/10/2022
+20,414,972,3,"Vandalism to a gaming machine was reported and resulted in the player's expulsion.",12/15/2023
+21,977,752,3,"An incident of cheating was recorded during a poker tournament and led to disqualification.",5/22/2024
+22,384,384,2,"Repeated offenses of aggressive behavior resulted in a formal complaint and ban.",3/18/2021
+23,969,896,9,"Trespassing was reported after a player entered a staff-only area.",11/25/2022
+24,529,542,2,"A player was found making threats towards another customer leading to police involvement.",8/14/2020
+25,413,413,5,"Attempts to alter a gaming machine were reported and resulted in a permanent ban.",10/5/2023
+26,379,134,8,"A player was reported for card counting which led to immediate eviction.",1/30/2024
+27,388,783,9,"Unwanted sexual advances towards staff resulted in immediate dismissal from the premises.",7/12/2022
+28,788,121,3,"A patron was caught stealing chips from the table resulting in arrest.",4/20/2023
+29,444,229,4,"Incidents of harassment were reported against a dealer leading to a formal investigation.",9/8/2021
+30,771,394,2,"A player was accused of cheating during a tournament and faced disqualification.",12/4/2019
+31,401,561,1,"Reports of aggressive behavior led to the player's expulsion from the casino.",11/18/2020
+32,197,518,1,"Found in a restricted area attempting to take personal items from staff.",6/30/2023
+33,681,156,2,"A player was caught attempting to use fake identification to enter the casino.",3/9/2024
+34,249,741,5,"An altercation over a gambling dispute resulted in multiple injuries.",5/7/2023
+35,754,513,5,"Reports of damaging casino property led to an investigation and subsequent ban.",2/11/2022
+36,393,551,9,"A player was reported for creating disturbances leading to multiple complaints.",1/25/2023
+37,117,386,5,"A patron made threats against another customer resulting in police involvement.",8/23/2021
+38,371,407,7,"A player was caught attempting to cheat during a high-stakes game.",10/14/2022
+39,672,783,6,"Incidents of vandalism were reported against gaming equipment.",7/8/2021
+40,138,161,2,"Repeated offenses of harassment led to a formal complaint against a player.",3/15/2023
+41,228,270,4,"A player was caught using a fake ID to gain entry into the casino.",11/27/2022
+42,658,611,5,"Reports of cheating during card games led to immediate eviction from the premises.",2/3/2023
+43,358,170,3,"A patron was found stealing chips from the poker table during a tournament.",6/29/2021
+44,268,191,1,"Attempts to alter the outcome of a game through deception led to disqualification.",4/19/2020
+45,413,756,6,"A player was caught trespassing in restricted areas leading to a permanent ban.",12/10/2022
+46,554,347,8,"Unwanted behavior towards staff resulted in multiple complaints and ban.",5/1/2023
+47,294,346,6,"Theft of gaming chips from another player during a high-stakes game.",3/7/2024
+48,484,736,7,"Aggressive behavior towards a staff member led to formal complaints.",1/14/2022
+49,870,365,1,"Found in a restricted area without authorization leading to an immediate ban.",8/2/2023
+50,999,999,9,"Vandalism of casino property resulted in a permanent expulsion from the casino.",10/16/2024

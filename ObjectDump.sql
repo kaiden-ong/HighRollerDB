@@ -28,15 +28,18 @@ SELECT TOP 1 * FROM tables
 ORDER BY table_id DESC
 
 SELECT * FROM games
+GO
 
 --Guaranteed to fail
 EXEC InsertTable 'fail', 8
+GO
 
 --Guaranteed to pass
 DECLARE @g_name VARCHAR(20) = 'Craps';
 DECLARE @g_cap INT = '8';
 
 EXEC InsertTable @g_name, @g_cap
+GO
 
 SELECT TOP 1 * FROM tables
 ORDER BY table_id DESC
@@ -138,10 +141,12 @@ SELECT TOP 1 * FROM incident_logs
 ORDER BY incident_id DESC
 
 SELECT * FROM offenses
+GO
 
 --Guaranteed to fail
 EXEC InsertIncidentLog 'player', 'Mark', '345-234-5423', 'email@email.com', 'employee', 'jack', 'Janitor', 2, 'theft',
 	'stole some stuff', '2024-02-14'
+GO
 
 --Guaranteed to pass
 DECLARE @player_fname VARCHAR(50) = 'Scotti'
@@ -158,6 +163,7 @@ DECLARE @date DATE = '2024-10-25'
 
 EXEC InsertIncidentLog @player_fname, @player_lname, @player_phone, @player_email, @employee_fname,
 	@employee_lname, @employee_job, @employee_table, @offense_name, @desc, @date
+GO
 
 SELECT TOP 1 * FROM incident_logs
 ORDER BY incident_id DESC
