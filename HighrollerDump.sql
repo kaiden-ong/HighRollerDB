@@ -132,7 +132,7 @@ CREATE TABLE table_items
     quantity INTEGER NOT NULL,
     PRIMARY KEY (table_item_id)
 );
-/*
+
 --For windows: Add data
 BULK INSERT employees
 FROM 'C:\Users\mrpi3\OneDrive\Documents\UW Files\UW Fall 2024\INFO 430\HighRollerDB\data\employees.csv'
@@ -281,7 +281,7 @@ WITH
 	ROWTERMINATOR = '\n',   
 	TABLOCK
 )
-*/
+
 -- Add foreign keys
 ALTER TABLE employees
     ADD CONSTRAINT fk_employee_table_id FOREIGN KEY (table_id) REFERENCES tables (table_id)
@@ -317,7 +317,7 @@ ALTER TABLE table_items
     ADD CONSTRAINT fk_tableitem_table_id FOREIGN KEY (table_id) REFERENCES tables (table_id),
     CONSTRAINT fk_tableitem_item_id FOREIGN KEY (item_id) REFERENCES items (item_id);
 
-
+/*
  BULK INSERT employees
 FROM '/employees.csv'
  WITH
@@ -482,3 +482,4 @@ WITH
 	ROWTERMINATOR = '\n',   
 	TABLOCK
 )
+*/
