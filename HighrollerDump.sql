@@ -134,7 +134,7 @@ CREATE TABLE table_items
     PRIMARY KEY (table_item_id)
 );
 
---Add data
+--For windows: Add data
 BULK INSERT employees
 FROM 'C:\Users\mrpi3\OneDrive\Documents\UW Files\UW Fall 2024\INFO 430\HighRollerDB\data\employees.csv'
 WITH
@@ -317,3 +317,40 @@ ALTER TABLE tables
 ALTER TABLE table_items
     ADD CONSTRAINT fk_tableitem_table_id FOREIGN KEY (table_id) REFERENCES tables (table_id),
     CONSTRAINT fk_tableitem_item_id FOREIGN KEY (item_id) REFERENCES items (item_id);
+
+
+--For Mac
+-- BULK INSERT employees
+-- FROM '/employees.csv'
+-- WITH
+-- (
+--     FIRSTROW = 2,
+--     FIELDTERMINATOR = ',',  --CSV field delimiter
+--     ROWTERMINATOR = '\n',   --Use to shift the control to next row
+--     TABLOCK
+-- )
+
+-- BULK INSERT offense
+-- FROM '/offense.csv'
+-- WITH
+-- (
+--     FIRSTROW = 2,
+--     FIELDTERMINATOR = ',',  --CSV field delimiter
+--     ROWTERMINATOR = '\n',   --Use to shift the control to next row
+--     TABLOCK
+-- )
+-- ALTER TABLE games
+-- ALTER COLUMN max_bet SMALLMONEY;
+
+
+
+
+-- BULK INSERT games
+-- FROM '/games.csv'
+-- WITH
+-- (
+--     FIRSTROW = 2,
+--     FIELDTERMINATOR = ',',  --CSV field delimiter
+--     ROWTERMINATOR = '\n',   --Use to shift the control to next row
+--     TABLOCK
+-- )
