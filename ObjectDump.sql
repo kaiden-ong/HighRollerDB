@@ -320,3 +320,10 @@ BEGIN
     RETURN @Duration;
 END;
 GO
+
+SELECT 
+    player_id,
+    join_date,
+    dbo.calculateMembershipDuration(join_date) AS membership_duration
+FROM 
+    players;
