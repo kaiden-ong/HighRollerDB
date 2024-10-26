@@ -300,30 +300,24 @@ EXEC InsertPlay
 GO
 
 --4) calculated column 
+ALTER TABLE players
+ADD total_sessions INT NULL;
+GO
 
-
-CREATE FUNCTION dbo.calculateMembershipDuration(@JoinDate DATE)
-RETURNS NVARCHAR(50)
+CREATE FUNCTION dbo.countSessions(@PlayerID INT)
+RETURNS INT
 AS
 BEGIN
-    DECLARE @Years INT;
-    DECLARE @Months INT;
-    DECLARE @Duration NVARCHAR(50);
-
-    -- Calculate years and months of membership
-    SET @Years = DATEDIFF(YEAR, @JoinDate, GETDATE());
-    SET @Months = DATEDIFF(MONTH, @JoinDate, GETDATE()) % 12;
-
-    -- Format the result as "X years, Y months"
-    SET @Duration = CONCAT(@Years, ' years, ', @Months, ' months');
-    
-    RETURN @Duration;
+    DECLARE @TotalSessions INT;
+    SELECT 
+        @TotalSessions = COUNT(s.player_id)
+    FROM 
+        sessions s
+    WHERE 
+        s.player_id = @PlayerID;
+    RETURN @TotalSessions;
 END;
 GO
 
-SELECT 
-    player_id,
-    join_date,
-    dbo.calculateMembershipDuration(join_date) AS membership_duration
-FROM 
-    players;
+UPDATE players
+SET total_sessions = dbo.countSessions(player_id);
