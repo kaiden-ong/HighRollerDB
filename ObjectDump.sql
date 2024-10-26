@@ -301,22 +301,22 @@ GO
 
 --4) calculated column 
 
-ALTER TABLE sessions
-ADD total_penalties MONEY NULL;
-GO
 
-
-CREATE FUNCTION dbo.calculateTotalPenalties(@SessionID INT)
-RETURNS MONEY
+CREATE FUNCTION dbo.calculateMembershipDuration(@JoinDate DATE)
+RETURNS NVARCHAR(50)
 AS
 BEGIN
-    DECLARE @TotalPenalties MONEY;
-    SELECT 
-        @TotalPenalties = SUM(p.penalty_amount)
-    FROM 
-        penalties p
-    WHERE 
-        p.session_id = @SessionID;
-    RETURN @TotalPenalties;
+    DECLARE @Years INT;
+    DECLARE @Months INT;
+    DECLARE @Duration NVARCHAR(50);
+
+    -- Calculate years and months of membership
+    SET @Years = DATEDIFF(YEAR, @JoinDate, GETDATE());
+    SET @Months = DATEDIFF(MONTH, @JoinDate, GETDATE()) % 12;
+
+    -- Format the result as "X years, Y months"
+    SET @Duration = CONCAT(@Years, ' years, ', @Months, ' months');
+    
+    RETURN @Duration;
 END;
 GO
