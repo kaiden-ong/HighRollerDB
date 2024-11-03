@@ -33,6 +33,10 @@ SELECT * FROM jackpots
 EXEC ko_sp_UpdateJackpot @jackpot_id=3, @new_jackpot=30000
 GO
 
+--fail 
+EXEC ko_sp_UpdateJackpot @jackpot_id=100000, @new_jackpot=30000
+GO
+
 -- deleting a row from the players table
 /*
 The purpose of this query is to delete a player from the players table.
@@ -57,6 +61,10 @@ GO
 -- testing sp, removing player id 1001 from players table
 SELECT * FROM players ORDER BY player_id DESC
 EXEC ko_sp_DeletePlayerRow @player_id=1001
+GO
+
+--fail
+EXEC ko_sp_DeletePlayerRow @player_id=100000
 GO
 
 -- trigger logging update operations
@@ -154,17 +162,18 @@ END
 GO
 
 
--- testing
+-- testing (fail, player under 21)
 SELECT * FROM players ORDER BY player_id DESC
 
 INSERT INTO players ( first_name, last_name, phone_number, email, date_of_birth, join_date) 
 VALUES ('John', 'Doe', '123-456-7890', 'johndoe@example.com', '2010-05-15', GETDATE());
 GO
+
 /*
 Write the SQL code to create two (2) different complex queries. One of these queries
 should use a stored procedure that takes given inputs and returns the expected output.
 */
--- see how much a game earned on a specific day
+-- Complex Query 1: see how much a game earned on a specific day
 /*
 The purpose of this query is to see how much profit a game made on any given day.
 It takes in a game_id and date, ensures both are valid and returns the sum of all earning,
@@ -209,6 +218,57 @@ GO
 EXEC ko_sp_GameProfit @game_id=6, @date='2025-05-11';
 GO
 
+--Complex Query 2: win percentage of a game
+/*
+The purpose of this query is to get a summary of players who have committed offenses before.
+It's retrieves all players' first incident, last incident, total_offenses, and offense types (concatenated for
+multiple offenses). This query can be very useful such as the scenario where we want to see a player's past offense
+history to determine if they need to be banned/suspended from the casino.
+*/
+WITH IncidentDetails AS (
+    SELECT 
+        il.player_id,
+        il.offense_id,
+        il.date,
+        o.offense_name
+    FROM incident_logs il
+    JOIN offenses o ON il.offense_id = o.offense_id
+),
+OffenseCounts AS (
+    SELECT 
+        player_id,
+        COUNT(*) AS TotalOffenses,
+        MIN(date) AS FirstIncidentDate,
+        MAX(date) AS LastIncidentDate
+    FROM IncidentDetails
+    GROUP BY player_id
+),
+OffenseTypeSummary AS (
+    SELECT 
+        player_id,
+        STRING_AGG(offense_name, ', ') AS OffenseTypes
+    FROM IncidentDetails
+    GROUP BY player_id
+)
+SELECT 
+    p.player_id,
+    p.first_name,
+    p.last_name,
+    oc.TotalOffenses,
+    oc.FirstIncidentDate,
+    oc.LastIncidentDate,
+    ots.OffenseTypes
+FROM players p
+INNER JOIN OffenseCounts oc ON p.player_id = oc.player_id
+LEFT JOIN OffenseTypeSummary ots ON p.player_id = ots.player_id
+ORDER BY p.player_id;
+GO
+
+--test
+INSERT INTO incident_logs (player_id, employee_id, offense_id, description, date)
+VALUES(3, 15, 1, 'found stealing 200$ worth of chips', GETDATE())
+GO
+
 -- Daniel's queries
 /*
  Write the SQL code to create two (2) stored procedures, one for updating data,
@@ -225,9 +285,6 @@ GO
 Write the SQL code to create two (2) different complex queries. One of these queries
 should use a stored procedure that takes given inputs and returns the expected output.
 */
-
-
---Daniel Zhang Queries 
 
 CREATE OR ALTER PROCEDURE dz_UpdatePlayerBalance
     @PlayerID INT,
