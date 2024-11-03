@@ -143,12 +143,12 @@ GO
  /* 
  Write the SQL code to create one (1) trigger that implements a business logic or a business rule.
 */
--- prevent players under 21 from joining
+-- Business rule: prevent players under 21 from joining
 /*
 The purpose of this trigger is to ensure only players 21+ can create accounts.
 If the player is under 21 years old it will return an error and remove them from the table.
 This is very important as we need to keep the law in mind and ensure that only people of age
-can gamble at our casino.
+can be members and be at our casino.
 */
 CREATE OR ALTER TRIGGER ko_tr_checkPlayerAge
 ON players
@@ -176,9 +176,9 @@ should use a stored procedure that takes given inputs and returns the expected o
 -- Complex Query 1: see how much a game earned on a specific day
 /*
 The purpose of this query is to see how much profit a game made on any given day.
-It takes in a game_id and date, ensures both are valid and returns the sum of all earning,
-positive and negative. This is important as casinos need to know if their games are earning
-money and this is a great way to check.
+It takes in a game_id and date, ensures both are valid and returns the sum of all earnings,
+game name, number of players, total play count, and date. This is important as casinos need
+to know if their games being played and if they are earning money.
 */
 CREATE OR ALTER PROCEDURE ko_sp_GameProfit
 	(@game_id INT, @date DATE)
@@ -189,20 +189,42 @@ BEGIN
 	ELSE IF (GETDATE() < @date)
 		THROW 50001, 'Date is in the future.', 1;
 
+	DECLARE @game_name VARCHAR(255);
+    SELECT @game_name = name FROM games WHERE game_id = @game_id;
+	DECLARE @total_profit FLOAT;
+	DECLARE @numPlays INTEGER;
+	DECLARE @numPlayers INTEGER;
+
 	WITH ActiveSessions AS (
-        SELECT session_id
+        SELECT session_id, player_id
         FROM sessions
-		WHERE date = @date)
-	SELECT p.game_id,
-        SUM(CASE 
-                WHEN p.result = 'win' THEN -p.bet_amount
-				WHEN p.result = 'lose' THEN p.bet_amount 
-                ELSE 0 
-            END) AS gameNetProfit
-	FROM plays p
-	INNER JOIN ActiveSessions a ON p.session_id = a.session_id
-	WHERE @game_id = p.game_id
-	GROUP BY p.game_id
+		WHERE date = @date),
+	GameProfit AS (
+		SELECT p.game_id,
+			SUM(CASE 
+					WHEN p.result = 'win' THEN -p.bet_amount
+					WHEN p.result = 'lose' THEN p.bet_amount 
+					ELSE 0 
+				END) AS gameNetProfit,
+			COUNT(p.play_id) as numPlays
+		FROM plays p
+		INNER JOIN ActiveSessions a ON p.session_id = a.session_id
+		WHERE @game_id = p.game_id
+		GROUP BY p.game_id
+	),
+    PlayerCount AS (
+        SELECT COUNT(DISTINCT a.player_id) AS numPlayers
+        FROM ActiveSessions a
+    )
+	SELECT @total_profit = COALESCE((SELECT gameNetProfit FROM GameProfit), 0),
+		@numPlays = (SELECT numPlays FROM GameProfit),
+		@numPlayers = (SELECT numPlayers FROM PlayerCount);
+	SELECT 
+		@game_name AS GameName,
+		COALESCE(@total_profit, 0) AS TotalProfit,
+		@date AS Date,
+		COALESCE(@numPlays, 0) as NumPlays,
+		COALESCE(@numPlayers, 0) as NumPlayers;
 END
 GO
 
